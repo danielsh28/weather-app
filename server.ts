@@ -32,7 +32,7 @@ http.createServer(function (req :IncomingMessage, res:ServerResponse ) {
     }
     contentType = fileTypes[fileExt];
     if (contentType) {
-            fs.readFile(fileName, function(err, data):void {
+            fs.readFile(`public/${fileName}`, function(err :NodeJS.ErrnoException , data : Buffer):void {
                 if (err) {
                     res.writeHead(404, {'Content-Type': contentType});
                     res.end();

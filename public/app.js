@@ -1,6 +1,7 @@
 'use strict';
 const OPEN_WEATHER_BASE_URL= 'https://api.openweathermap.org/data/2.5/weather?q=' ;
 const  API_KEY ='b8f8c2d097af436ae72b9746eaa82598';
+//import *  as  L from  'leaflet';
 const weatherMap = L.map('myMap').setView([22.395793, -29.391974], 2);
 class City {
    constructor(name, coor,icon) {
