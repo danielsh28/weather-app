@@ -2,7 +2,7 @@
   "name": "weather-app",
   "version": "0.1.0",
   "description": "application for weather details and map by city",
-  "main": "server.js",
+  "main": "server.ts",
   "scripts": {
     "start": "ts-node server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"

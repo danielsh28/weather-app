@@ -13,7 +13,8 @@ const fileTypes = {
     'json': 'application/json'
 };
 const port = 8080;
-
+const RESOURCE_NOT_FOUND_CODE = 404;
+const OK_CODE=200;
 
 
 http.createServer(function (req :IncomingMessage, res:ServerResponse ) {
@@ -32,22 +33,22 @@ http.createServer(function (req :IncomingMessage, res:ServerResponse ) {
     }
     contentType = fileTypes[fileExt];
     if (contentType) {
-            fs.readFile(`public/${fileName}`, function(err :NodeJS.ErrnoException , data : Buffer):void {
-                if (err) {
-                    res.writeHead(404, {'Content-Type': contentType});
-                    res.end();
-                } else {
-                    res.writeHead(200, {'Content-Type': contentType});
-                    res.write(data);
-                    res.end();
-                }
-            });
-        } else {
-            res.writeHead(404, {'Content-Type': 'text/html'});
-            res.end();
-        }
+        fs.readFile(`public/${fileName}`, function(err :NodeJS.ErrnoException , data : Buffer):void {
+            if (err) {
+                res.writeHead(RESOURCE_NOT_FOUND_CODE, {'Content-Type': contentType});
+                res.end();
+            } else {
+                res.writeHead(OK_CODE, {'Content-Type': contentType});
+                res.write(data);
+                res.end();
+            }
+        });
+    } else {
+        res.writeHead(RESOURCE_NOT_FOUND_CODE, {'Content-Type': 'text/html'});
+        res.end();
+    }
 
 
 }).listen(port, function ():void {
-    console.log('Client is available at http://localhost:' + port);
+    console.log('Weather-app is available at http://localhost:' + port);
 });
