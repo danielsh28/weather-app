@@ -39,15 +39,6 @@ class City {
     get name(){
         return this._name;
     }
-
-    get coor(){
-        return this._coor;
-    }
-
-    get icon(){
-        return this._icon;
-    }
-
     get marker(){
         return this._marker;
     }
