@@ -1,6 +1,5 @@
 
-#myMap{
-    height:600px;
-
+.container-fluid .row #myMap{
+height: 100vh;
 }
 

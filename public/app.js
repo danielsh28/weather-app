@@ -1,4 +1,5 @@
 'use strict';
+//import * as L from 'leaflet';
 const INITIAL_VIEW = [22.395793, -29.391974];
 const MAP_ZOOM = 2;
 const OPEN_WEATHER_BASE_URL= 'https://api.openweathermap.org/data/2.5/weather?q=' ;
@@ -47,6 +48,10 @@ class City {
         this.marker.setIcon(icon);
 
     }
+
+    get coor(){
+        return this._coor;
+    }
 }
 
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
@@ -56,7 +61,6 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
     accessToken: 'pk.eyJ1IjoiZGFuaWVsc2gyOCIsImEiOiJjanV2bHBrbHIwMnRxM3luNW9raTNwdTZ6In0.BmV0eVG2HigsTrP0EemcwA'
 }).addTo(weatherMap);
 const defMarker = new L.Icon.Default();
-document.querySelector('#cityName').addEventListener('change',loadDetails);
 const choosenIcon = L.icon({
     iconUrl: 'https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png',
     iconSize:    [25, 41],
@@ -79,10 +83,19 @@ cityMap.set('barcelona' ,new City('barcelona',[41.390205,2.154007]));
 cityMap.set('moscow' , new City('moscow',[55.725054,37.628965]));
 const cacheMap = new Map();
 let lastSelectedCity = null;
+document.querySelector('#cityName').addEventListener('change',loadDetails);
+cityMap.forEach(city=> city.marker.on('click',loadDetails.bind(city)));
 
 function loadDetails(){
-    const chosenCity =cityMap.get(document.querySelector('#cityName').value);
-    if(chosenCity.name !=='init') {
+    let chosenCity =  this;
+    if(chosenCity.constructor.name === 'HTMLSelectElement'){
+        chosenCity=cityMap.get(document.querySelector('#cityName').value);
+
+    }
+    else{
+        document.querySelector('#cityName').value=chosenCity.name;
+    }
+    if(chosenCity && chosenCity.name !=='init') {
         let cachedItem =cacheMap.get(chosenCity.name);
         /*if city is in already cached' take details from cach map, if not, fetch from api*/
         if(!cachedItem){
@@ -105,6 +118,7 @@ function loadDetails(){
         }
         chosenCity.setIconMarker(choosenIcon);
         lastSelectedCity = chosenCity;
+        weatherMap.setView(chosenCity.coor,7);
     }
 }
 
