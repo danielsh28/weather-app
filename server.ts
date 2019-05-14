@@ -10,7 +10,8 @@ const fileTypes = {
     'htm': 'text/html',
     'css': 'text/css',
     'js': 'text/javascript',
-    'json': 'application/json'
+    'json': 'application/json',
+    'png': 'image/png'
 };
 const port = 8080;
 const RESOURCE_NOT_FOUND_CODE = 404;

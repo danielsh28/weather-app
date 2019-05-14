@@ -1,11 +1,26 @@
+/*weather details for cached city*/
 'use strict';
-//import * as L from 'leaflet';
 const INITIAL_VIEW = [22.395793, -29.391974];
 const MAP_ZOOM = 2;
 const OPEN_WEATHER_BASE_URL= 'https://api.openweathermap.org/data/2.5/weather?q=' ;
 const  API_KEY ='b8f8c2d097af436ae72b9746eaa82598';
 const weatherMap = L.map('myMap').setView(INITIAL_VIEW, MAP_ZOOM);
-/*weather details for cached city*/
+L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox.streets',
+    accessToken: 'pk.eyJ1IjoiZGFuaWVsc2gyOCIsImEiOiJjanV2bHBrbHIwMnRxM3luNW9raTNwdTZ6In0.BmV0eVG2HigsTrP0EemcwA'
+}).addTo(weatherMap);
+const defMarker = new L.Icon.Default();
+const choosenIcon = L.icon({
+    iconUrl: '/img/marker-icon-red.png',
+    iconSize:    [25, 41],
+    iconAnchor:  [12, 41],
+    popupAnchor: [1, -34],
+    tooltipAnchor: [16, -28],
+    shadowSize:  [41, 41]
+
+});
 class CachedDetails {
     constructor(desc, wind,temp,hum){
         this._desc = desc;
@@ -54,22 +69,7 @@ class City {
     }
 }
 
-L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
-    id: 'mapbox.streets',
-    accessToken: 'pk.eyJ1IjoiZGFuaWVsc2gyOCIsImEiOiJjanV2bHBrbHIwMnRxM3luNW9raTNwdTZ6In0.BmV0eVG2HigsTrP0EemcwA'
-}).addTo(weatherMap);
-const defMarker = new L.Icon.Default();
-const choosenIcon = L.icon({
-    iconUrl: 'https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png',
-    iconSize:    [25, 41],
-    iconAnchor:  [12, 41],
-    popupAnchor: [1, -34],
-    tooltipAnchor: [16, -28],
-    shadowSize:  [41, 41]
 
-});
 /* map saving city deatils for the map element and dom manipulation*/
 const cityMap = new Map();
 cityMap.set('jerusalem', new City('jerusalem', [31.796,35.175]));

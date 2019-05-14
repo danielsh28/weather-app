@@ -5,10 +5,10 @@ var fs = require('fs');
 var url = require('url');
 var fileTypes = {
     'html': 'text/html',
-    'htm': 'text/html',
     'css': 'text/css',
     'js': 'text/javascript',
-    'json': 'application/json'
+    'json': 'application/json',
+    'png' : 'image/png'
 };
 var port = 8080;
 http.createServer(function (req, res) {
